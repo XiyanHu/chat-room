@@ -3,6 +3,7 @@ import {v1} from "uuid"
 import {fromJS,Map,List} from "immutable"
 
 import coreReducer from "../../src/server/reducer"//{}：export no {}: export default
+import {addRoom,removeRoom} from "../../src/server/actionCreator.js"
 
 describe("server side core Reducer",()=>{
     
@@ -22,4 +23,27 @@ describe("server side core Reducer",()=>{
         expect(finalState.getIn(["rooms",1,"owner"])).to.equal("steven")
     })
 
+    it("Use actionCreator",()=>{
+        var id = v1()
+        var actions = [
+            addRoom({id,name:"1",owner:"jack"}),
+            addRoom({name:"2",owner:"nathan"}),
+            addRoom({name:"3",owner:"jack"}),
+            removeRoom({id:id,user:"jack"}),
+        ]
+        const finalState = actions.reduce( coreReducer, undefined )
+        console.log(finalState)
+        expect(finalState.get("rooms").size).to.equal(2)
+        expect(finalState.getIn(["rooms",0,"owner"])).to.equal("nathan")
+
+    })
+
+
+
+
+
 })
+
+
+
+
