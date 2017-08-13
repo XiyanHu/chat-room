@@ -11,3 +11,16 @@ export function removeRoom( payload ){
         type:"REMOVE_ROOM",payload: payload 
     }
 }
+
+
+export function newMessage(){
+    return {
+        type:"NEW_MESSAGE"
+    }
+}
+
+export function switchRoom(){
+    return {
+        type:"SWITCH_ROOM"
+    }
+}
