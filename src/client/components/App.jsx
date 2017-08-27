@@ -11,7 +11,7 @@ else
 
 class App extends Component {
     getCurrentRoomName() {
-        if (!this.props.currentRoom) return "无"
+        if (!this.props.currentRoom) return "No"
         const room = this.props.rooms.find(r => r.get("id") === this.props.currentRoom)
         return (room && room.get) ? room.get("name") : room
     }
@@ -28,8 +28,8 @@ class App extends Component {
             this.props.messages.get(this.props.currentRoom) : []
     }
     addRoom() {
-        var name = prompt("房间名称")
-        if (!name) return alert("不能没有房间名称")
+        var name = prompt("Room Name")
+        if (!name) return alert("Room must have a name!")
         this.props.dispatch(addRoom({
             name, owner: this.props.userId
         }))
@@ -51,7 +51,7 @@ class App extends Component {
     }
 
     setUsername() {
-        let name = prompt("用名称") || "匿名"
+        let name = prompt("用名称") || "Anonymous"
         this.props.dispatch(setUsername(name, this.props.userId))
     }
 
