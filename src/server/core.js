@@ -1,27 +1,27 @@
-import {v1} from "uuid"
-import {fromJS,Map,List} from "immutable"
+import { v1 } from "uuid"
+import { fromJS, Map, List } from "immutable"
 
 export const INITIAL_STATE = fromJS({
-	rooms:[],
+    rooms: [],
 })
 
-export function addRoom(state = INITIAL_STATE, room){
-	if (!room || !room.owner) return state
+export function addRoom(state = INITIAL_STATE, room) {
+    if (!room || !room.owner) return state
 
-	return state.update("rooms", rooms => rooms.push(Map({
-		id: room.id || v1(),
-		name: room.name || "no name",
-		owner: room.owner,
-	})))
+    return state.update("rooms", rooms => rooms.push(Map({
+        id: room.id || v1(),
+        name: room.name || "no name",
+        owner: room.owner
+    })))
 }
 
 
-export function removeRoom(state, {id,user}){
-	const rooms = state.get("rooms")
-	var index = rooms.findIndex( r => r.get("id") === id)
-	if (index == -1 || rooms.getIn([index,"owner"]) !== user){
-		console.log("You are not the creator of this chat room. No premissions to delete it!")
-		return state
-	}
-	return state.update("rooms", rooms => rooms.splice(index,1))//1 means the number of element we delete
+export function removeRoom(state, { id, userId }) {
+    const rooms = state.get("rooms")
+    var index = rooms.findIndex(r => r.get("id") === id)
+    if (index == -1 || rooms.getIn([index, "owner"]) !== userId) {
+        console.log("Only the owner of the room can delete the room")
+        return state
+    }
+    return state.update("rooms", rooms => rooms.splice(index, 1))
 }
